@@ -8,11 +8,11 @@ UDP_PORT = 9505
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 sock.bind((UDP_IP, UDP_PORT))
 
-print("🔄 수신 대기 중...")
+print("Waiting for client")
 
 while True:
     try:
-        # 첫 번째 패킷: 총 패킷 수 수신
+        
         total_packets, _ = sock.recvfrom(1024)
         total_packets = int(total_packets.decode())
 
@@ -21,7 +21,7 @@ while True:
             part, _ = sock.recvfrom(4096)
             buffer += part
 
-        # JPEG 디코딩
+        # JPEG decoding
         img_np = np.frombuffer(buffer, dtype=np.uint8)
         frame = cv2.imdecode(img_np, cv2.IMREAD_COLOR)
 
